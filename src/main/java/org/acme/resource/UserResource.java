@@ -29,7 +29,7 @@ public class UserResource {
 
     @POST
     @Transactional
-    public Response create(UserDTO dto) {
+    public Response create(@Valid UserDTO dto) {
         if (dto.username == null || dto.password == null) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity("Username dan password tidak boleh null")
