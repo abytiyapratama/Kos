@@ -47,6 +47,7 @@ public class UserResource {
         UserDTO result = new UserDTO();
         result.setId(user.id);
         result.setUsername(user.username);
+        result.setPassword(user.password);
         result.setRole(user.role);
 
         return Response.created(URI.create("/users/" + user.id)).entity(result).build();
