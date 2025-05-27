@@ -24,6 +24,7 @@ public class UserResource {
             UserDTO dto = new UserDTO();
             dto.setId(u.id);
             dto.setUsername(u.username);
+            dto.setPassword(u.password);
             dto.setRole(u.role);
             return dto;
         }).collect(Collectors.toList());
