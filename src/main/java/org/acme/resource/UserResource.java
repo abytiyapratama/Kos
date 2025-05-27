@@ -4,6 +4,8 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.validation.Valid;
+
 import org.acme.dto.UserDTO;
 import org.acme.entity.User;
 
