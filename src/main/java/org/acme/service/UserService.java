@@ -28,7 +28,7 @@ public class UserService {
 
         User user = new User();
         user.username = dto.username;
-        user.password = dto.password; // jika perlu hashing bisa ditambahkan di sini
+        user.password = dto.password; // jika perlu hashing bisa ditambahkan di sini ya
         user.role = dto.role != null ? dto.role : "user";
         user.persist();
     }
