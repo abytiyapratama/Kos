@@ -3,9 +3,11 @@ package org.acme.resource;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.acme.dto.UserDTO;
 import org.acme.entity.User;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,11 +29,24 @@ public class UserResource {
 
     @POST
     @Transactional
-    public void create(UserDTO dto) {
+    public Response create(UserDTO dto) {
+        if (dto.username == null || dto.password == null) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("Username dan password tidak boleh null")
+                    .build();
+        }
+
         User user = new User();
         user.username = dto.username;
-        user.password = dto.password; // hash password jika perlu
+        user.password = dto.password; // 🔒 TODO: Hash password sebelum simpan ke DB
         user.role = dto.role != null ? dto.role : "user";
         user.persist();
+
+        UserDTO result = new UserDTO();
+        result.id = user.id;
+        result.username = user.username;
+        result.role = user.role;
+
+        return Response.created(URI.create("/users/" + user.id)).entity(result).build();
     }
 }
