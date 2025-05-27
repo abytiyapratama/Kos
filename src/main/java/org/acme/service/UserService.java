@@ -17,27 +17,27 @@ public class UserService {
 
     @Transactional
     public void create(UserDTO dto) {
-        if (dto == null || dto.username == null || dto.password == null) {
+        if (dto == null || dto.getUsername() == null || dto.getPassword() == null) {
             throw new IllegalArgumentException("Username dan password wajib diisi");
         }
 
-        boolean exists = User.find("username", dto.username).firstResult() != null;
+        boolean exists = User.find("username", dto.getUsername()).firstResult() != null;
         if (exists) {
             throw new IllegalArgumentException("Username sudah digunakan");
         }
 
         User user = new User();
-        user.username = dto.username;
-        user.password = dto.password; // jika perlu hashing bisa ditambahkan di sini ya
-        user.role = dto.role != null ? dto.role : "user";
+        user.username = dto.getUsername();
+        user.password = dto.getPassword(); // 🔒 hash jika perlu
+        user.role = dto.getRole() != null ? dto.getRole() : "user";
         user.persist();
     }
 
     private UserDTO toDTO(User u) {
         UserDTO dto = new UserDTO();
-        dto.id = u.id;
-        dto.username = u.username;
-        dto.role = u.role;
+        dto.setId(u.id);
+        dto.setUsername(u.username);
+        dto.setRole(u.role);
         return dto;
     }
 }
